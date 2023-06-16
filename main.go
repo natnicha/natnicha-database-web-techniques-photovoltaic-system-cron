@@ -22,12 +22,19 @@ func main() {
 
 func callDailyWeather() {
 	godotenv.Load(".env")
-	request, err := http.Post("http://localhost:"+os.Getenv("SERVICE_PORT")+"/weather/daily", "", nil)
+	client := &http.Client{}
+	url := "http://localhost:" + os.Getenv("SERVICE_PORT") + "/weather/daily"
+	request, err := http.NewRequest("POST", url, nil)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Println(err.Error())
 	}
-	if request.StatusCode != http.StatusAccepted {
+
+	request.Header.Set("API_KEY", os.Getenv("APP_API_KEY"))
+	resp, err := client.Do(request)
+	if err != nil {
+		log.Println(err.Error())
+	}
+	if resp.StatusCode != http.StatusAccepted {
 		err := errors.New("Requesting to daily weather failed")
 		log.Println(err.Error())
 		return
