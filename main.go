@@ -25,13 +25,12 @@ func main() {
 }
 
 func generateProjectReport() {
-	// look up in the table whether which project reach 30 days and didn't print yet
+	defer db.Disconnect()
 	db.Connect()
 	projects, err := repositories.GetProjects()
 	if err != nil {
 		log.Println(err.Error())
 	}
-	// callProjectGenerateReport by project ID
 	for _, project := range projects {
 		callProjectGenerateReport(project.UserId, project.Id)
 	}
