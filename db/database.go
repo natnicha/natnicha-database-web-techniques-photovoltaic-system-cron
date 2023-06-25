@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -28,4 +29,12 @@ func Connect() {
 	} else {
 		fmt.Println("Successfully connected to the database")
 	}
+}
+
+func Disconnect() {
+	db, err := Database.DB()
+	if err != nil {
+		log.Println(err.Error())
+	}
+	db.Close()
 }
