@@ -16,8 +16,8 @@ import (
 
 func main() {
 	c := cron.New()
-	c.AddFunc("5 0 * * *", callDailyWeather)        //every 0.05 AM
-	c.AddFunc("*/1 * * * *", generateProjectReport) //every 0.15 AM
+	c.AddFunc("5 0 * * *", callDailyWeather)       //every 0.05 AM
+	c.AddFunc("15 0 * * *", generateProjectReport) //every 0.15 AM
 	c.Start()
 	sig := make(chan os.Signal)
 	signal.Notify(sig, os.Interrupt, os.Kill)
