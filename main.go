@@ -46,10 +46,7 @@ func callProjectGenerateReport(userId int, projectId int) {
 	}
 
 	request.Header.Set("api-key", os.Getenv("APP_API_KEY"))
-
-	q := request.URL.Query()
-	q.Add("user-id", fmt.Sprint(userId))
-	request.URL.RawQuery = q.Encode()
+	request.Header.Set("user-id", fmt.Sprint(userId))
 	resp, err := client.Do(request)
 	if err != nil {
 		log.Println(err.Error())
