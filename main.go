@@ -45,7 +45,7 @@ func callProjectGenerateReport(userId int, projectId int) {
 		log.Println(err.Error())
 	}
 
-	request.Header.Set("API_KEY", os.Getenv("APP_API_KEY"))
+	request.Header.Set("api-key", os.Getenv("APP_API_KEY"))
 
 	q := request.URL.Query()
 	q.Add("user-id", fmt.Sprint(userId))
@@ -64,13 +64,13 @@ func callProjectGenerateReport(userId int, projectId int) {
 func callDailyWeather() {
 	godotenv.Load(".env")
 	client := &http.Client{}
-	url := "http://localhost:" + os.Getenv("SERVICE_PORT") + "/weather/daily"
+	url := "http://localhost:" + os.Getenv("SERVICE_PORT") + "/api/v1/weather/daily"
 	request, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	request.Header.Set("API_KEY", os.Getenv("APP_API_KEY"))
+	request.Header.Set("api-key", os.Getenv("APP_API_KEY"))
 	resp, err := client.Do(request)
 	if err != nil {
 		log.Println(err.Error())
